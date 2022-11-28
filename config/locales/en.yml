@@ -1,6 +1,90 @@
 ---
 en:
+  activemodel:
+    models:
+      decidim/proposals/admin/publish_proposal_event: Review proposal needed event
+      decidim/proposals/admin/publish_amendment_event: Review amendment needed event
+      decidim/proposals/admin/publish_acceptance_amendment_event: Review amendment accepted event
   decidim:
+    events:
+      amendments:
+        acceptance_review:
+          email_intro: "%{resource_title} has been created. You have to review in this page:"
+          email_outro: You have received this notification because you or other admins have to review "%{resource_title}".
+          email_subject: There is a new amendment accepted created by %{author_name} to be reviewed %{resource_title}
+          notification_title: There is a new amendment accepted created by <a href="%{author_path}">%{author_name} %{author_nickname}</a> to be reviewed <a href="%{resource_path}">%{resource_title}</a>
+        amendment_review:
+          email_intro: "%{resource_title} has been created. You have to review in this page:"
+          email_outro: You have received this notification because you or other admins have to review "%{resource_title}".
+          email_subject: There is a new amendment created by %{author_name} to be reviewed %{resource_title}
+          notification_title: There is a new amendment created by <a href="%{author_path}">%{author_name} %{author_nickname}</a> to be reviewed <a href="%{resource_path}">%{resource_title}</a>
+      proposals:
+        proposal_review:
+          email_intro: "%{resource_title} has been created. You have to review in this page:"
+          email_outro: You have received this notification because you or other admins have to review "%{resource_title}".
+          email_subject: There is a new proposal created by %{author_name} to be reviewed %{resource_title}
+          notification_title: There is a new proposal created by <a href="%{author_path}">%{author_name} %{author_nickname}</a> to be reviewed <a href="%{resource_path}">%{resource_title}</a>
+    amendments:
+      emendation:
+        announcement:
+          review_accepted:
+            |-
+            The acceptance of the amendment for the %{amendable_type} %{proposal_link} has been
+            sent on review <strong>%{date}</strong>.
+          review: |-
+            This amendment for the %{amendable_type} %{proposal_link} has been
+            sent on review <strong>%{date}</strong>.
+      review_accepted:
+        error: There was a problem accepting the amendament.
+        success: The acceptance has been sent for review.
+      review_draft:
+        error: There was a problem reviewing the amendament.
+        success: Amendment successfully sent to review.
+        title: Send to review your amendment
+        review: Send to review
+      wizard_step_form:
+        steps:
+          '5': Send to review
+    admin:
+      actions:
+        accept: Accept
+      filters:
+        proposals:
+          state_eq:
+            values:
+              review: In review
+              review_accepted: Acceptance review
+    proposals:
+      create:
+        already_in_review: You already have a proposal under review.
+        cant_amend: You cannot create an amendment while the proposal is under review.
+      application_helper:
+        filter_state_values:
+          review: In review
+          review_accepted: Acceptance review
+      review:
+        error: There was a problem reviewing the proposal.
+        success: Proposal successfully sent to review.
+      answers:
+        review: To review
+        review_accepted: To accept
+      proposals:
+        edit:
+          send_in_review: Send to review
+        proposal:
+          in_review: In review
+        wizard_steps:
+          step_5: Send to review
+        wizard_aside:
+          back_from_step_5: Back to edit draft
+        review:
+          title: Send to review your proposal
+          review: Send to review
     components:
       proposal_moderation:
-        name: ProposalModeration
+        name: Proposal Moderation
+      proposals:
+        settings:
+          step:
+            moderation_amendment_enabled: Moderation amendment enabled
+            moderation_enabled: Moderation enabled

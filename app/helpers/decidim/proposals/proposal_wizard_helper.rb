@@ -1,10 +1,12 @@
+require_dependency Decidim::Proposals::Engine.root.join('app', 'helpers', 'decidim', 'proposals', 'proposal_wizard_helper').to_s
+
+
 # frozen_string_literal: true
 
 module Decidim
-  module ProposalModeration
-    # Custom helpers, scoped to the proposal_moderation engine.
-    #
-    module ApplicationHelper
+  module Proposals
+    # Simple helpers to handle markup variations for proposal wizard partials
+    module ProposalWizardHelper
 
       def proposal_wizard_stepper(current_step)
 
@@ -54,7 +56,6 @@ module Decidim
 
         humanize_proposal_state(proposal.review? ? proposal.internal_state : proposal.state).html_safe
       end
-
 
     end
   end

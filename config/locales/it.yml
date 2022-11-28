@@ -1,0 +1,90 @@
+---
+it:
+  activemodel:
+    models:
+      decidim/proposals/admin/publish_proposal_event: Proposta da revisionare
+      decidim/proposals/admin/publish_amendment_event: Emendamento da revisionare
+      decidim/proposals/admin/publish_acceptance_amendment_event: Accettazione di un emendamento da revisionare
+  decidim:
+    events:
+      amendments:
+        acceptance_review:
+          email_intro: "%{resource_title} è stata creata. Devi verificare il contenuto in questa pagina:"
+          email_outro: Hai ricevuto questa notifica perchè tu o un altro admin dovete revisionare "%{resource_title}".
+          email_subject: C'è un nuovo emendamento accettato creato da %{author_name} che deve essere revisionato %{resource_title}
+          notification_title: C'è un nuovo emendamento accettato creato da <a href="%{author_path}">%{author_name} %{author_nickname}</a> che deve essere revisionato <a href="%{resource_path}">%{resource_title}</a>
+        amendment_review:
+          email_intro: "%{resource_title} è stata creata. Devi verificare il contenuto in questa pagina:"
+          email_outro: Hai ricevuto questa notifica perchè tu o un altro admin dovete revisionare "%{resource_title}".
+          email_subject: C'è un nuovo emendamento creato da %{author_name} che deve essere revisionato %{resource_title}
+          notification_title: C'è un nuovo emendamento creato da <a href="%{author_path}">%{author_name} %{author_nickname}</a> che deve essere revisionato <a href="%{resource_path}">%{resource_title}</a>
+      proposals:
+        proposal_review:
+          email_intro: "%{resource_title} è stata creata. Devi verificare il contenuto in questa pagina:"
+          email_outro: Hai ricevuto questa notifica perchè tu o un altro admin dovete revisionare "%{resource_title}".
+          email_subject: C'è una nuova proposta creata da %{author_name} che deve essere revisionata %{resource_title}
+          notification_title: C'è una nuova proposta creata da <a href="%{author_path}">%{author_name} %{author_nickname}</a> che deve essere revisionata <a href="%{resource_path}">%{resource_title}</a>
+    amendments:
+      emendation:
+        announcement:
+          review_accepted:
+            |-
+              L'accettazione di questo emendamento per il %{amendable_type} %{proposal_link} è stata inviata in revisione
+              il <strong>%{date}</strong>.
+          review: |-
+                Questo emendamento per la %{amendable_type} %{proposal_link} è stato inviato in revisione
+                il <strong>%{date}</strong>.
+      review_accepted:
+        error: Impossibile mandare in revisione l'accettazione dell'emendamento
+        success: L'accettazione dell'emendamento è stata inviata in revisione.
+      review_draft:
+        error: Impossibile mandare in revisione l'emendamento
+        success: L'emendamento è stato inviato in revisione
+        title: Invia in revisione il tuo emendamento
+        review: Invia in revisione
+      wizard_step_form:
+        steps:
+          '5': Invia in revisione
+    admin:
+      actions:
+        accept: Accetta
+      filters:
+        proposals:
+          state_eq:
+            values:
+              review: In revisione
+              review_accepted: In accettazione
+    proposals:
+      create:
+        already_in_review: Hai già in revisione una proposta.
+        cant_amend: Non puoi creare un emendamento finchè la proposta è in revisione.
+      application_helper:
+        filter_state_values:
+          review: In revisione
+          review_accepted: In accettazione
+      review:
+        invalid: Impossibile mandare in revisione la proposta
+        success: Tutte le proposte sono state inviate in revisione
+      answers:
+        review: Da revisionare
+        review_accepted: Da accettare
+      proposals:
+        edit:
+          send_in_review: Invia in revisione
+        proposal:
+          in_review: In revisione
+        wizard_steps:
+          step_5: Invia in revisione
+        wizard_aside:
+          back_from_step_5: Torna a modificare la bozza
+        review:
+          title: Invia in revisione la tua proposta
+          review: Invia in revisione
+    components:
+      proposal_moderation:
+        name: Moderazione Proposte
+      proposals:
+        settings:
+          step:
+            moderation_amendment_enabled: Moderazione emendamenti abilitata
+            moderation_enabled: Moderazione abilitata
