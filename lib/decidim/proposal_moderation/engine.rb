@@ -12,8 +12,12 @@ module Decidim
 
       routes do
         # Add engine routes here
-        # resources :proposal_moderation
-        # root to: "proposal_moderation#index"
+        resources :comments, only: [] do
+          member do
+            put :publish, to: "decidim/comments/comments#publish"
+            put :reject, to: "decidim/comments/comments#reject"
+          end
+        end
       end
 
       initializer "decidim_proposal_moderation.webpacker.assets_path" do
@@ -41,13 +45,13 @@ module Decidim
         proposal_settings = Decidim.find_component_manifest("proposals").settings(:step)
         proposal_settings.attribute :moderation_enabled, type: :boolean, default: false
         proposal_settings.attribute :moderation_amendment_enabled, type: :boolean, default: false
-      end
 
-      # initializer "decidim_spid.view_helpers" do
-      #   ActiveSupport.on_load(:action_controller_base) do
-      #     helper Decidim::ProposalModeration::ApplicationHelper
-      #   end
-      # end
+        [ :accountability, :blogs, :budgets, :debates, :meetings, :proposals, :sortitions].each do |name|
+          manifest = Decidim.find_component_manifest(name)
+          settings = manifest.settings(:global) if manifest
+          settings.attribute :moderation_comments_enabled, type: :boolean, default: false if settings
+        end
+      end
 
       overrides = "#{Decidim::ProposalModeration::Engine.root}/app/overrides"
       config.to_prepare do

@@ -5,8 +5,15 @@ it:
       decidim/proposals/admin/publish_proposal_event: Proposta da revisionare
       decidim/proposals/admin/publish_amendment_event: Emendamento da revisionare
       decidim/proposals/admin/publish_acceptance_amendment_event: Accettazione di un emendamento da revisionare
+      decidim/comments/admin_event: Commento da revisionare
   decidim:
     events:
+      comments:
+        admin:
+          email_intro: "%{resource_title} è stato commentato. Puoi leggere il commento in questa pagina:"
+          email_outro: Hai ricevuto questa notifica perché tu o un altro admin dovete revisionare in "%{resource_title}".
+          email_subject: C'è un nuovo commento da %{author_name} in %{resource_title}
+          notification_title: C'è un nuovo commento da <a href="%{author_path}">%{author_name} %{author_nickname}</a> in <a href="%{resource_path}">%{resource_title}</a>
       amendments:
         acceptance_review:
           email_intro: "%{resource_title} è stata creata. Devi verificare il contenuto in questa pagina:"
@@ -46,6 +53,10 @@ it:
         steps:
           '5': Invia in revisione
     admin:
+      moderations:
+        report:
+          reasons:
+            admin_rejection: Revisione fallita
       actions:
         accept: Accetta
       filters:
@@ -81,10 +92,42 @@ it:
           title: Invia in revisione la tua proposta
           review: Invia in revisione
     components:
+      blogs:
+        settings:
+          global:
+            moderation_comments_enabled: Moderazione commenti abilitata
+      accountability:
+        settings:
+          global:
+            moderation_comments_enabled: Moderazione commenti abilitata
+      budgets:
+        settings:
+          global:
+            moderation_comments_enabled: Moderazione commenti abilitata
+      debates:
+        settings:
+          global:
+            moderation_comments_enabled: Moderazione commenti abilitata
+      meetings:
+        settings:
+          global:
+            moderation_comments_enabled: Moderazione commenti abilitata
+      sortitions:
+        settings:
+          global:
+            moderation_comments_enabled: Moderazione commenti abilitata
+      comment:
+        review: Da revisionare
+        reject: Segnala & Nascondi il commento
+        confirm_reject: Sei sicuro di voler segnalare e nascondere questo commento per tutti gli utenti?
+        confirm_publish: Sei sicuro di voler pubblicare questo commento?
+        publish: Pubblica
       proposal_moderation:
         name: Moderazione Proposte
       proposals:
         settings:
+          global:
+            moderation_comments_enabled: Moderazione commenti abilitata
           step:
             moderation_amendment_enabled: Moderazione emendamenti abilitata
             moderation_enabled: Moderazione abilitata

@@ -1,12 +1,20 @@
 ---
 en:
+
   activemodel:
     models:
       decidim/proposals/admin/publish_proposal_event: Review proposal needed event
       decidim/proposals/admin/publish_amendment_event: Review amendment needed event
       decidim/proposals/admin/publish_acceptance_amendment_event: Review amendment accepted event
+      decidim/comments/admin_event: Review comment needed event
   decidim:
     events:
+      comments:
+        admin:
+          email_intro: "%{resource_title} has been commented. You can read the comment in this page:"
+          email_outro: You have received this notificationbecause you or other admins have to review in "%{resource_title}".
+          email_subject: There is a new comment from %{author_name} in %{resource_title}
+          notification_title: There is a new comment from <a href="%{author_path}">%{author_name} %{author_nickname}</a> in <a href="%{resource_path}">%{resource_title}</a>
       amendments:
         acceptance_review:
           email_intro: "%{resource_title} has been created. You have to review in this page:"
@@ -46,6 +54,10 @@ en:
         steps:
           '5': Send to review
     admin:
+      moderations:
+        report:
+          reasons:
+            admin_rejection: Review failed
       actions:
         accept: Accept
       filters:
@@ -81,10 +93,42 @@ en:
           title: Send to review your proposal
           review: Send to review
     components:
+      blogs:
+        settings:
+          global:
+            moderation_comments_enabled: Moderation comment enabled
+      accountability:
+        settings:
+          global:
+            moderation_comments_enabled: Moderation comment enabled
+      budgets:
+        settings:
+          global:
+            moderation_comments_enabled: Moderation comment enabled
+      debates:
+        settings:
+          global:
+            moderation_comments_enabled: Moderation comment enabled
+      meetings:
+        settings:
+          global:
+            moderation_comments_enabled: Moderation comment enabled
+      sortitions:
+        settings:
+          global:
+            moderation_comments_enabled: Moderation comment enabled
+      comment:
+        review: To review
+        reject: Report & Hide comment
+        confirm_reject: Are you sure you want to report & hide this comment for all users?
+        confirm_publish: Are you sure you want to publish this comment?
+        publish: Publish
       proposal_moderation:
         name: Proposal Moderation
       proposals:
         settings:
+          global:
+            moderation_comments_enabled: Moderation comment enabled
           step:
             moderation_amendment_enabled: Moderation amendment enabled
             moderation_enabled: Moderation enabled

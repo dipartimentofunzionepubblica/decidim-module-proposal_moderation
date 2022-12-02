@@ -1,0 +1,21 @@
+$(() => {
+  var rootCommentableId = <%== "comments-for-#{@comment.root_commentable.commentable_type.demodulize}-#{@comment.root_commentable.id}".to_json %>;
+  var $comments = $("#" + rootCommentableId);
+  var config = $comments.data("decidim-comments");
+
+  component = new Decidim.CommentsComponent($comments, config);
+  component.unmountComponent();
+
+  var commentId = <%= @comment.id.to_json %>;
+  var $comment = $("#comment_<%= @comment.id %>");
+
+  $comment.closest('.comment-thread').parent().replaceWith("");
+
+  $comments = $("#" + rootCommentableId);
+  $comments.foundation();
+
+  // Re-create the component
+  component = new Decidim.CommentsComponent($comments, $comments.data("decidim-comments"));
+  component.mountComponent();
+  $comments.data("comments", component);
+});
