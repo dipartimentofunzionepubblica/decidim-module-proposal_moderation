@@ -14,7 +14,9 @@ en:
           email_intro: "%{resource_title} has been commented. You can read the comment in this page:"
           email_outro: You have received this notificationbecause you or other admins have to review in "%{resource_title}".
           email_subject: There is a new comment from %{author_name} in %{resource_title}
-          notification_title: There is a new comment from <a href="%{author_path}">%{author_name} %{author_nickname}</a> in <a href="%{resource_path}">%{resource_title}</a>
+          notification_title: There is a new comment from <a href="%{author_path}">%{author_name} %{author_nickname}</a> in <a href="%{resource_path}">%{resource_title}</a> %{priority}
+          priority_high: "(Priority: High)"
+          priority_low: ""
       amendments:
         acceptance_review:
           email_intro: "%{resource_title} has been created. You have to review in this page:"

@@ -8,5 +8,6 @@ module Decidim
   # This namespace holds the logic of the `ProposalModeration` component. This component
   # allows users to create proposal_moderation in a participatory space.
   module ProposalModeration
+    autoload :ContentProcessor, "decidim/proposal_moderation/content_processor"
   end
 end

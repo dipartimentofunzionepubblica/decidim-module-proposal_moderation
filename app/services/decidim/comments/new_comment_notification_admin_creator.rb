@@ -19,11 +19,10 @@ module Decidim
       #   mentioned
       # mentioned_groups - And ActiveRecord::Relation of the user_groups that have
       #   been mentioned
-      def initialize(comment, mentioned_users, mentioned_groups = nil)
+      def initialize(comment, priority = :low)
         @comment = comment
-        @mentioned_users = mentioned_users
-        @mentioned_groups = mentioned_groups
         @already_notified_users = [comment.author]
+        @priority = priority
       end
 
       # Generates the notifications for the given comment.
@@ -35,7 +34,7 @@ module Decidim
 
       private
 
-      attr_reader :comment, :mentioned_users, :mentioned_groups, :already_notified_users
+      attr_reader :comment, :already_notified_users
 
       def notify_admins
         notify(:admin, affected_users: @comment.participatory_space.moderators)
@@ -50,7 +49,8 @@ module Decidim
           event_class: event_class,
           resource: comment.root_commentable,
           extra: {
-            comment_id: comment.id
+            comment_id: comment.id,
+            priority: @priority
           }
         }.deep_merge(users)
 

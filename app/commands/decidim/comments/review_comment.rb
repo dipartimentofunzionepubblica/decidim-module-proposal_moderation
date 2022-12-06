@@ -36,7 +36,7 @@ module Decidim
       attr_reader :form, :comment
 
       def create_comment
-        # parsed = Decidim::ContentProcessor.parse(form.body, current_organization: form.current_organization)
+        priority = Decidim::ProposalModeration::ContentProcessor.parse_priority(form.body, I18n.locale)
 
         params = {
           author: @author,
@@ -56,17 +56,14 @@ module Decidim
           visibility: "public-only"
         )
 
-        # mentioned_users = parsed.metadata[:user].users
-        # mentioned_groups = parsed.metadata[:user_group].groups
-        # CommentCreation.publish(@comment, parsed.metadata)
-        # send_notifications(mentioned_users, mentioned_groups)
+        send_admin_notifications(priority)
       end
 
       def update_comment
-        parsed = Decidim::ContentProcessor.parse(form.body, current_organization: form.current_organization)
+        priority = Decidim::ProposalModeration::ContentProcessor.parse_priority(form.body, I18n.locale)
 
         params = {
-          body: { I18n.locale => parsed.rewrite },
+          body: { I18n.locale => form.body },
           state: 'review'
         }
 
@@ -78,14 +75,11 @@ module Decidim
           edit: true
         )
 
-        mentioned_users = parsed.metadata[:user].users
-        mentioned_groups = parsed.metadata[:user_group].groups
-        # CommentCreation.publish(@comment, parsed.metadata)
-        send_notifications(mentioned_users, mentioned_groups)
+        send_admin_notifications(priority)
       end
 
-      def send_notifications(mentioned_users, mentioned_groups)
-        NewCommentNotificationAdminCreator.new(comment, mentioned_users, mentioned_groups).create
+      def send_admin_notifications(priority)
+        NewCommentNotificationAdminCreator.new(comment, priority).create
       end
 
       def root_commentable(commentable)
