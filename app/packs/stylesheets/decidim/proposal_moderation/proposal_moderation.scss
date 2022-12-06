@@ -1,1 +1,8 @@
 /* css for decidim_proposal_moderation */
+
+.moderated_user_contents-badge img {
+  height: 30px;
+}
+.moderated_user_contents-badge.has-tip {
+  cursor: inherit;
+}

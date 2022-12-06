@@ -55,6 +55,8 @@ it:
         steps:
           '5': Invia in revisione
     admin:
+      helpers:
+        moderation_icon: Contenuti moderati
       moderations:
         report:
           reasons:

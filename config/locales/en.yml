@@ -56,6 +56,8 @@ en:
         steps:
           '5': Send to review
     admin:
+      helpers:
+        moderation_icon: Moderated content
       moderations:
         report:
           reasons:

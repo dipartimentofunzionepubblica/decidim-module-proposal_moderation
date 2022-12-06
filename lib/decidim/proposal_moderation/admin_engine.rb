@@ -23,6 +23,16 @@ module Decidim
         end
       end
 
+      initializer "decidim_proposals_admin.view_helpers" do
+        ActiveSupport.on_load(:action_controller_base) do
+          helper Decidim::ProposalModeration::ApplicationHelper
+        end
+      end
+
+      initializer "decidim_proposals_admin.webpacker.assets_path" do
+        Decidim.register_assets_path File.expand_path("app/packs", root)
+      end
+
       def load_seed
         nil
       end
