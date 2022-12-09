@@ -12,9 +12,17 @@ module Decidim
       routes do
         put "/participatory_processes/:participatory_process_slug/components/:component_id/manage/proposals/:id/publish", to: "decidim/proposals/admin/proposals#publish", as: :publish_process_proposal_admin
         put "/assemblies/:participatory_process_slug/components/:component_id/manage/proposals/:id/publish", to: "decidim/proposals/admin/proposals#publish", as: :publish_assembly_proposal_admin
+        put "/conferences/:participatory_process_slug/components/:component_id/manage/proposals/:id/publish", to: "decidim/proposals/admin/proposals#publish", as: :publish_conference_proposal_admin
+        put "/participatory_processes/:participatory_process_slug/components/:component_id/manage/proposals/:id/reject", to: "decidim/proposals/admin/proposals#reject", as: :reject_process_proposal_admin
+        put "/assemblies/:participatory_process_slug/components/:component_id/manage/proposals/:id/reject", to: "decidim/proposals/admin/proposals#reject", as: :reject_assembly_proposal_admin
+        put "/conferences/:participatory_process_slug/components/:component_id/manage/proposals/:id/reject", to: "decidim/proposals/admin/proposals#reject", as: :reject_conference_proposal_admin
 
         put "/participatory_processes/:participatory_process_slug/components/:component_id/manage/proposals/:id/accept", to: "decidim/proposals/admin/proposals#accept", as: :accept_process_proposal_admin
         put "/assemblies/:participatory_process_slug/components/:component_id/manage/proposals/:id/accept", to: "decidim/proposals/admin/proposals#accept", as: :accept_assembly_proposal_admin
+        put "/conferences/:participatory_process_slug/components/:component_id/manage/proposals/:id/accept", to: "decidim/proposals/admin/proposals#accept", as: :accept_conference_proposal_admin
+        put "/participatory_processes/:participatory_process_slug/components/:component_id/manage/proposals/:id/reject_acceptance", to: "decidim/proposals/admin/proposals#reject_acceptance", as: :reject_acceptance_process_proposal_admin
+        put "/assemblies/:participatory_process_slug/components/:component_id/manage/proposals/:id/reject_acceptance", to: "decidim/proposals/admin/proposals#reject_acceptance", as: :reject_acceptance_assembly_proposal_admin
+        put "/conferences/:participatory_process_slug/components/:component_id/manage/proposals/:id/reject_acceptance", to: "decidim/proposals/admin/proposals#reject_acceptance", as: :reject_conference_assembly_proposal_admin
       end
 
       initializer "decidim_proposals_admin.mount_routes" do

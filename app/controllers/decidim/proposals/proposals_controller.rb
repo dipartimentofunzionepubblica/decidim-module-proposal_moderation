@@ -17,6 +17,7 @@ module Decidim
           render "decidim/proposals/proposals/participatory_texts/participatory_text"
         else
           @base_query = search.results.published.not_hidden.or(search.results.in_review_for_user(current_user).not_hidden)
+          @base_query = @base_query.where.not(id: Proposal.not_in_moderation_rejected_for_user(current_user).ids)
           if current_component.try(:current_settings).try(:moderation_amendment_enabled)
             @base_query = @base_query.where.not(id: (Proposal.in_review_accepted - Proposal.in_acceptance_for_user(current_user)).map(&:id))
           end
@@ -120,11 +121,13 @@ module Decidim
 
       def can_show_proposal?
         return false if current_component.current_settings.try(:moderation_amendment_enabled) && @proposal.acceptance? && (!@proposal.authors.include?(current_user) && !current_user&.admin? && !@proposal.try(:amendable).try(:authors).try(:include?, current_user))
+        return false if current_component.current_settings.try(:moderation_enabled) && @proposal && @proposal.review_failed? && (!@proposal.authors.include?(current_user) && !current_user&.admin?)
         return false if current_component.current_settings.try(:moderation_enabled) && @proposal && @proposal.review? && (!@proposal.authors.include?(current_user) && !current_user&.admin?)
         return true if @proposal&.amendable? || current_user&.admin?
 
         Proposal.only_visible_emendations_for(current_user, current_component).published.include?(@proposal) ||
-          Proposal.only_visible_emendations_for(current_user, current_component).in_review.include?(@proposal)
+          Proposal.only_visible_emendations_for(current_user, current_component).in_review.include?(@proposal) ||
+          Proposal.only_visible_emendations_for(current_user, current_component).in_moderation_rejected.include?(@proposal)
       end
 
       private

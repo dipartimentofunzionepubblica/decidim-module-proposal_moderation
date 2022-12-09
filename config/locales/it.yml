@@ -36,6 +36,7 @@ it:
     amendments:
       emendation:
         announcement:
+          moderation_rejected: Questo emendamento per la %{amendable_type} %{proposal_link} è stato rigettato il <strong>%{date}</strong>.
           review_accepted:
             |-
               L'accettazione di questo emendamento per il %{amendable_type} %{proposal_link} è stata inviata in revisione
@@ -51,6 +52,9 @@ it:
         success: L'emendamento è stato inviato in revisione
         title: Invia in revisione il tuo emendamento
         review: Invia in revisione
+      reject_draft:
+        error: Si è verificato un errore durante il rifiuto di questo emendamento.
+        success: Emendamento rigettato con successo.
       wizard_step_form:
         steps:
           '5': Invia in revisione
@@ -62,6 +66,8 @@ it:
           reasons:
             admin_rejection: Revisione fallita
       actions:
+        reject_acceptance: Rigetta
+        reject: Rigetta
         accept: Accetta
       filters:
         proposals:
@@ -69,7 +75,11 @@ it:
             values:
               review: In revisione
               review_accepted: In accettazione
+              moderation_rejected: Revisione fallita
     proposals:
+      reject:
+        error: Impossibile rigettare la proposta
+        success: La proposta è stato rigettata con successo
       create:
         already_in_review: Hai già in revisione una proposta.
         cant_amend: Non puoi creare un emendamento finchè la proposta è in revisione.
@@ -77,13 +87,18 @@ it:
         filter_state_values:
           review: In revisione
           review_accepted: In accettazione
+          moderation_rejected: Revisione fallita
       review:
         invalid: Impossibile mandare in revisione la proposta
         success: Tutte le proposte sono state inviate in revisione
       answers:
         review: Da revisionare
         review_accepted: Da accettare
+        moderation_rejected: Revisione fallita
       proposals:
+        show:
+          proposal_moderation_rejected_reason: Revisione fallita
+          proposal_review_reason: In revisione
         edit:
           send_in_review: Invia in revisione
         proposal:

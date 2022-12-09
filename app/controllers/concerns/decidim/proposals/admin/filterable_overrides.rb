@@ -10,7 +10,7 @@ module Decidim
           private
 
           def proposal_states
-            Proposal::POSSIBLE_STATES.without("not_answered") + ["review", "review_accepted"]
+            Proposal::POSSIBLE_STATES.without("not_answered") + ["review", "review_accepted", "moderation_rejected"]
           end
 
         end

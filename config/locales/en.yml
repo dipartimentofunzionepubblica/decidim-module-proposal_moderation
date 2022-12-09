@@ -1,6 +1,5 @@
 ---
 en:
-
   activemodel:
     models:
       decidim/proposals/admin/publish_proposal_event: Review proposal needed event
@@ -37,6 +36,7 @@ en:
     amendments:
       emendation:
         announcement:
+          moderation_rejected: This amendment for the %{amendable_type} %{proposal_link} has been rejected on <strong>%{date}</strong>.
           review_accepted:
             |-
             The acceptance of the amendment for the %{amendable_type} %{proposal_link} has been
@@ -52,6 +52,9 @@ en:
         success: Amendment successfully sent to review.
         title: Send to review your amendment
         review: Send to review
+      reject_draft:
+        error: There was a problem rejecting the amendament.
+        success: Amendment successfully rejected.
       wizard_step_form:
         steps:
           '5': Send to review
@@ -63,6 +66,8 @@ en:
           reasons:
             admin_rejection: Review failed
       actions:
+        reject_acceptance: Reject
+        reject: Reject
         accept: Accept
       filters:
         proposals:
@@ -70,7 +75,11 @@ en:
             values:
               review: In review
               review_accepted: Acceptance review
+              moderation_rejected: Review failed
     proposals:
+      reject:
+        error: There was a problem rejecting the proposal.
+        success: The proposal has been rejected successfully.
       create:
         already_in_review: You already have a proposal under review.
         cant_amend: You cannot create an amendment while the proposal is under review.
@@ -78,13 +87,18 @@ en:
         filter_state_values:
           review: In review
           review_accepted: Acceptance review
+          moderation_rejected: Review failed
       review:
         error: There was a problem reviewing the proposal.
         success: Proposal successfully sent to review.
       answers:
         review: To review
         review_accepted: To accept
+        moderation_rejected: Review failed
       proposals:
+        show:
+          proposal_moderation_rejected_reason: Review failed
+          proposal_review_reason: In review
         edit:
           send_in_review: Send to review
         proposal:

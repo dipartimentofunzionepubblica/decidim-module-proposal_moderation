@@ -32,6 +32,31 @@ module Decidim
           end
         end
 
+        def reject
+          enforce_permission_to :publish, :proposal, proposal: proposal
+
+          if @proposal.amendment
+            @form = form(Decidim::Amendable::PublishForm).from_model(@proposal.amendment)
+            Decidim::Amendable::Admin::RejectDraft.call(@form) do
+              on(:ok) do |emendation|
+                redirect_back fallback_location: proposals_path, flash: { notice: t("success", scope: "decidim.amendments.reject_draft") }
+              end
+              on(:invalid) do
+                redirect_back fallback_location: proposals_path, flash: { alert: t("error", scope: "decidim.amendments.reject_draft") }
+              end
+            end
+          else
+            Decidim::Proposals::Admin::RejectProposal.call(@proposal, current_user) do
+              on(:ok) do
+                redirect_back fallback_location: proposals_path, flash: { notice: I18n.t("proposals.reject.success", scope: "decidim") }
+              end
+              on(:invalid) do
+                redirect_back fallback_location: proposals_path, flash: { alert: I18n.t("proposals.reject.error", scope: "decidim") }
+              end
+            end
+          end
+        end
+
         def accept
           enforce_permission_to :accept, :amendment, current_component: current_component
 
@@ -43,6 +68,21 @@ module Decidim
             end
             on(:invalid) do
               redirect_back fallback_location: proposals_path, flash: { alert: I18n.t("accepted.error", scope: "decidim.amendments") }
+            end
+          end
+        end
+
+        def reject_acceptance
+          enforce_permission_to :accept, :amendment, current_component: current_component
+
+          @proposal = collection.find(params[:id])
+          Decidim::Amendable::Admin::Reject.call(@proposal) do
+            on(:ok) do |emendation|
+              flash[:notice] = t("rejected.success", scope: "decidim.amendments")
+              redirect_to Decidim::ResourceLocatorPresenter.new(emendation).path
+            end
+            on(:invalid) do
+              redirect_back fallback_location: proposals_path, flash: { alert: I18n.t("rejected.error", scope: "decidim.amendments") }
             end
           end
         end

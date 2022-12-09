@@ -26,7 +26,7 @@ module Decidim
           if @options[:current_user] && commentable.participatory_space.moderators.include?(@options[:current_user])
             return r
           elsif @options[:current_user]
-            return r.where.not(id: commentable.comment_threads.map{ |a| a.id if a.review? && a.decidim_author_id != @options[:current_user].id }.compact)
+            return r.where.not(id: commentable.comments.map{ |a| a.id if a.review? && a.decidim_author_id != @options[:current_user].id }.compact)
           else
             r.not_in_review
           end

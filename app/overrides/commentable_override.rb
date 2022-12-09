@@ -1,5 +1,5 @@
 
-klasses = ["Decidim::Initiative", "Decidim::Meetings::Meeting", "Decidim::Proposals::Proposal", "Decidim::Budgets::Project", "Decidim::Debates::Debate", "Decidim::Blogs::Post", "Decidim::Comments::Comment"]
+klasses = ["Decidim::Sortitions::Sortition", "Decidim::Meetings::Meeting", "Decidim::Proposals::Proposal", "Decidim::Budgets::Project", "Decidim::Debates::Debate", "Decidim::Blogs::Post", "Decidim::Comments::Comment"]
 klasses.map(&:safe_constantize).compact.each do |klass|
   klass.class_eval do
 

@@ -5,6 +5,7 @@ require_dependency Decidim::Core::Engine.root.join('app', 'helpers', 'decidim', 
 module Decidim
   module AmendmentsHelper
     def amend_button_for(amendable)
+      return if amendable.review_failed?
       return "<div class='card text-center card__amend-button'><div class='card__content'>#{I18n.t('decidim.proposals.proposals.proposal.in_review')}</div></div>".html_safe if current_component.try(:current_settings).try(:moderation_amendment_enabled) && amendable.review?
       return if current_component.try(:current_settings).try(:moderation_amendment_enabled) && amendable.acceptance?
       return unless amendments_enabled? && amendable.amendable?

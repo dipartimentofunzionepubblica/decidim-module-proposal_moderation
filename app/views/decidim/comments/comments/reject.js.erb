@@ -9,7 +9,7 @@ $(() => {
   var commentId = <%= @comment.id.to_json %>;
   var $comment = $("#comment_<%= @comment.id %>");
 
-  $comment.closest('.comment-thread').parent().replaceWith("");
+  $comment.replaceWith("");
 
   $comments = $("#" + rootCommentableId);
   $comments.foundation();
