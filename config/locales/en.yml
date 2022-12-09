@@ -77,6 +77,16 @@ en:
               review_accepted: Acceptance review
               moderation_rejected: Review failed
     proposals:
+      collaborative_drafts:
+        show:
+          review: Send to review
+        collaborative_draft:
+          review:
+            irreversible_action_modal:
+              body: After sent to review the draft as a proposal, the draft won't be editable anymore. The proposal won't accept new authors or contributions.
+              cancel: Cancel
+              ok: Send to review as a Proposal
+              title: The following action is irreversible
       reject:
         error: There was a problem rejecting the proposal.
         success: The proposal has been rejected successfully.

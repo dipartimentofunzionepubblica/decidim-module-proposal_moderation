@@ -77,6 +77,16 @@ it:
               review_accepted: In accettazione
               moderation_rejected: Revisione fallita
     proposals:
+      collaborative_drafts:
+        show:
+          review: Manda in revisione
+        collaborative_draft:
+          review:
+            irreversible_action_modal:
+              title: La seguente azione è irreversibile
+              body: Dopo aver mandato in revizione la bozza come proposta, la bozza non sarà più modificabile. La proposta non accetterà nuovi autori o contributi.
+              ok: Manda in revisione
+              cancel: Annulla
       reject:
         error: Impossibile rigettare la proposta
         success: La proposta è stato rigettata con successo
