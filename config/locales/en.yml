@@ -11,11 +11,16 @@ en:
       comments:
         admin:
           email_intro: "%{resource_title} has been commented. You can read the comment in this page:"
-          email_outro: You have received this notificationbecause you or other admins have to review in "%{resource_title}".
+          email_outro: You have received this notification because you or other admins have to review in "%{resource_title}".
           email_subject: There is a new comment from %{author_name} in %{resource_title}
           notification_title: There is a new comment from <a href="%{author_path}">%{author_name} %{author_nickname}</a> in <a href="%{resource_path}">%{resource_title}</a> %{priority}
           priority_high: "(Priority: High)"
           priority_low: ""
+        published_comment:
+          email_intro: "%{resource_title} has been published. You can read the comment in this page:"
+          email_outro: You have received this notification because your comment has been successfully published in "%{resource_title}".
+          email_subject: Your comment in %{resource_title} has been successfully published
+          notification_title: Your comment in <a href="%{resource_path}">%{resource_title}</a> has been successfully published
       amendments:
         acceptance_review:
           email_intro: "%{resource_title} has been created. You have to review in this page:"

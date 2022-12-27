@@ -28,6 +28,7 @@ module Decidim
             change_amendment_state_to_review
             find_or_create_moderation!
             update_reported_content!
+            create_report!
             hide!
             send_hide_notification_to_moderators
           end
@@ -73,7 +74,7 @@ module Decidim
             user: @current_user
           ) do |a|
             a.reason = 'admin_rejection'
-            a.details = "Commento non approvato dell'admin #{@current_user.nickname}"
+            a.details = "Emendamento non approvato dell'admin #{@current_user.nickname}"
             a.locale = I18n.locale
           end
           @report.save(validate: false)

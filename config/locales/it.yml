@@ -16,6 +16,11 @@ it:
           notification_title: C'è un nuovo commento da <a href="%{author_path}">%{author_name} %{author_nickname}</a> in <a href="%{resource_path}">%{resource_title}</a> %{priority}
           priority_high: "(Priorità: Alta)"
           priority_low: ""
+        published_comment:
+          email_intro: "%{resource_title} è stato pubblicato. Puoi leggere il commento in questa pagina:"
+          email_outro: Hai ricevuto questa notifica perché il tuo commento è stato pubblicato "%{resource_title}".
+          email_subject: Il tuo commento in %{resource_title} è stato pubblicato
+          notification_title: Il tuo commento in <a href="%{resource_path}">%{resource_title}</a> è stato pubblicato
       amendments:
         acceptance_review:
           email_intro: "%{resource_title} è stata creata. Devi verificare il contenuto in questa pagina:"

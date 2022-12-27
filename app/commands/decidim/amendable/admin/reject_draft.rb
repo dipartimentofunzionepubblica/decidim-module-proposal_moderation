@@ -29,6 +29,7 @@ module Decidim
             change_amendment_state_to_review
             find_or_create_moderation!
             update_reported_content!
+            create_report!
             hide!
             send_hide_notification_to_moderators
           end

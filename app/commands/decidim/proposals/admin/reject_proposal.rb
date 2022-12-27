@@ -24,8 +24,8 @@ module Decidim
             reject_proposal
             find_or_create_moderation!
             update_reported_content!
+            create_report!
             hide!
-            send_hide_notification_to_moderators
           end
 
           broadcast(:ok, @proposal)
@@ -50,7 +50,7 @@ module Decidim
         attr_reader :form, :report
 
         def find_or_create_moderation!
-          @moderation = Moderation.find_or_create_by!(reportable: @proposal, participatory_space: participatory_space)
+          @moderation = Moderation.find_or_create_by!(reportable: @proposal, participatory_space: participatory_space, report_count: 1)
         end
 
         def participatory_space
@@ -67,22 +67,14 @@ module Decidim
             user: @current_user
           ) do |a|
             a.reason = 'admin_rejection'
-            a.details = "Commento non approvato dell'admin #{@current_user.nickname}"
+            a.details = "Proposta non approvata dell'admin #{@current_user.nickname}"
             a.locale = I18n.locale
           end
           @report.save(validate: false)
         end
 
         def hide!
-          Decidim::Admin::HideResource.new(@proposal, @current_user).call
-        end
-
-        def send_hide_notification_to_moderators
-          participatory_space_moderators.each do |moderator|
-            next unless moderator.email_on_moderations
-
-            ReportedMailer.hide(moderator, @report).deliver_later
-          end
+          Decidim::Admin::HideResource.new(@proposal.reload, @current_user).call
         end
 
         def reset(attribute)

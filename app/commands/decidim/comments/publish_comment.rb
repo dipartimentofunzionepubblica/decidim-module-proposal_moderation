@@ -39,7 +39,7 @@ module Decidim
       end
 
       def send_notifications(mentioned_users, mentioned_groups)
-        NewCommentNotificationCreator.new(comment, mentioned_users, mentioned_groups).create
+        NewModerationCommentNotificationCreator.new(comment, mentioned_users, mentioned_groups).create
       end
 
       def root_commentable(commentable)

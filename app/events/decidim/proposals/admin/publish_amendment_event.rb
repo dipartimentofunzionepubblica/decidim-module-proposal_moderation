@@ -52,7 +52,7 @@ module Decidim
         end
 
         def resource_path
-          ResourceLocatorPresenter.new(participatory_space).edit
+          manage_component_path(component)
         end
 
       end
