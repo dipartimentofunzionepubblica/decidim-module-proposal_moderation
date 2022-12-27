@@ -6,6 +6,7 @@ module Decidim
       # Exposes the proposal resource so users can view and create them.
       class ProposalsController
         include Decidim::Proposals::Admin::FilterableOverrides
+        include Decidim::ComponentPathHelper
 
         def publish
           enforce_permission_to :publish, :proposal, proposal: proposal
@@ -14,19 +15,19 @@ module Decidim
             @form = form(Decidim::Amendable::PublishForm).from_model(@proposal.amendment)
             Decidim::Amendable::Admin::PublishDraft.call(@form) do
               on(:ok) do |emendation|
-                redirect_back fallback_location: proposals_path, flash: { notice: t("success", scope: "decidim.amendments.publish_draft") }
+                redirect_back fallback_location: manage_component_path(current_component), flash: { notice: t("success", scope: "decidim.amendments.publish_draft") }
               end
               on(:invalid) do
-                redirect_back fallback_location: proposals_path, flash: { alert: t("error", scope: "decidim.amendments.publish_draft") }
+                redirect_back fallback_location: manage_component_path(current_component), flash: { alert: t("error", scope: "decidim.amendments.publish_draft") }
               end
             end
           else
             Decidim::Proposals::Admin::PublishProposal.call(@proposal, current_user) do
               on(:ok) do
-                redirect_back fallback_location: proposals_path, flash: { notice: I18n.t("proposals.publish.success", scope: "decidim") }
+                redirect_back fallback_location: manage_component_path(current_component), flash: { notice: I18n.t("proposals.publish.success", scope: "decidim") }
               end
               on(:invalid) do
-                redirect_back fallback_location: proposals_path, flash: { alert: I18n.t("proposals.publish.error", scope: "decidim") }
+                redirect_back fallback_location: manage_component_path(current_component), flash: { alert: I18n.t("proposals.publish.error", scope: "decidim") }
               end
             end
           end
@@ -39,19 +40,19 @@ module Decidim
             @form = form(Decidim::Amendable::PublishForm).from_model(@proposal.amendment)
             Decidim::Amendable::Admin::RejectDraft.call(@form) do
               on(:ok) do |emendation|
-                redirect_back fallback_location: proposals_path, flash: { notice: t("success", scope: "decidim.amendments.reject_draft") }
+                redirect_back fallback_location: manage_component_path(current_component), flash: { notice: t("success", scope: "decidim.amendments.reject_draft") }
               end
               on(:invalid) do
-                redirect_back fallback_location: proposals_path, flash: { alert: t("error", scope: "decidim.amendments.reject_draft") }
+                redirect_back fallback_location: manage_component_path(current_component), flash: { alert: t("error", scope: "decidim.amendments.reject_draft") }
               end
             end
           else
             Decidim::Proposals::Admin::RejectProposal.call(@proposal, current_user) do
               on(:ok) do
-                redirect_back fallback_location: proposals_path, flash: { notice: I18n.t("proposals.reject.success", scope: "decidim") }
+                redirect_back fallback_location: manage_component_path(current_component), flash: { notice: I18n.t("proposals.reject.success", scope: "decidim") }
               end
               on(:invalid) do
-                redirect_back fallback_location: proposals_path, flash: { alert: I18n.t("proposals.reject.error", scope: "decidim") }
+                redirect_back fallback_location: manage_component_path(current_component), flash: { alert: I18n.t("proposals.reject.error", scope: "decidim") }
               end
             end
           end
@@ -67,7 +68,7 @@ module Decidim
               redirect_to Decidim::ResourceLocatorPresenter.new(emendation).path
             end
             on(:invalid) do
-              redirect_back fallback_location: proposals_path, flash: { alert: I18n.t("accepted.error", scope: "decidim.amendments") }
+              redirect_back fallback_location: manage_component_path(current_component), flash: { alert: I18n.t("accepted.error", scope: "decidim.amendments") }
             end
           end
         end
@@ -82,7 +83,7 @@ module Decidim
               redirect_to Decidim::ResourceLocatorPresenter.new(emendation).path
             end
             on(:invalid) do
-              redirect_back fallback_location: proposals_path, flash: { alert: I18n.t("rejected.error", scope: "decidim.amendments") }
+              redirect_back fallback_location: manage_component_path(current_component), flash: { alert: I18n.t("rejected.error", scope: "decidim.amendments") }
             end
           end
         end

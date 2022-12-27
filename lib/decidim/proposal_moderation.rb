@@ -5,6 +5,7 @@ require "decidim/proposal_moderation/engine"
 require "decidim/proposal_moderation/admin_engine"
 require_relative "searchable/comment"
 require_relative "searchable/proposal"
+require 'deface'
 
 module Decidim
   # This namespace holds the logic of the `ProposalModeration` component. This component

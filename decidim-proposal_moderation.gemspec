@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors = ["Lorenzo Angelone"]
   s.email = ["l.angelone@kapusons.it"]
   s.license = "AGPL-3.0"
-  s.homepage = "https://github.com/decidim/decidim-module-proposal_moderation"
+  s.homepage = "https://github.com/dipartimentofunzionepubblica/decidim-module-proposal_moderation"
   s.required_ruby_version = ">= 2.7"
 
   s.name = "decidim-proposal_moderation"

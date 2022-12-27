@@ -50,7 +50,7 @@ module Decidim
         end
 
         def find_or_create_moderation!
-          @moderation = Moderation.find_or_create_by!(reportable: @emendation, participatory_space: participatory_space)
+          @moderation = Moderation.find_or_create_by!(reportable: @emendation, participatory_space: participatory_space, report_count: 1)
         end
 
         def participatory_space
@@ -74,7 +74,7 @@ module Decidim
         end
 
         def hide!
-          Decidim::Admin::HideResource.new(@emendation, @current_user).call
+          Decidim::Admin::HideResource.new(@emendation.reload, @current_user).call
         end
 
         def send_hide_notification_to_moderators

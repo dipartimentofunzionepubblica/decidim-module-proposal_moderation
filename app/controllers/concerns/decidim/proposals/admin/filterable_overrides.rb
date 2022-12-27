@@ -5,8 +5,6 @@ module Decidim
         extend ActiveSupport::Concern
 
         included do
-          # include Decidim::Admin::Filterable
-
           private
 
           def proposal_states

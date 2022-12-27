@@ -4,6 +4,7 @@ require "rails"
 require "decidim/core"
 require "decidim/proposals"
 require "decidim/searchable/comment"
+require "decidim/proposal_moderation/commentable_override"
 
 module Decidim
   module ProposalModeration
@@ -35,6 +36,13 @@ module Decidim
       initializer "decidim_proposals.mount_routes" do
         Decidim::Core::Engine.routes do
           mount Decidim::ProposalModeration::Engine, at: "/", as: "decidim_proposals"
+        end
+      end
+
+      initializer "decidim_proposal_moderation.overrides" do |app|
+        app.config.to_prepare do
+          Decidim::Proposals::Proposal.include Decidim::ProposalModeration::ProposalOverride
+          Decidim::Comments::Commentable.include Decidim::ProposalModeration::CommentableOverride
         end
       end
 
