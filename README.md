@@ -1,12 +1,18 @@
-# Decidim::ProposalModeration
+# Decidim Proposal Moderation
 
 Il componente aggiunge la possibilità di rinviare la pubblicazione di proposte, emendamenti e commenti a seguito di una revisione del contenuto da parte di un amministratore.
 Dipende dalle gemme [decidim](https://github.com/decidim/decidim/tree/v0.25.2) e [deface](https://github.com/spree/deface#readme).
 
-## Usage
+Attenzione: questo modulo sovrascrive alcune dell funzionalità di decidim-proposals e decidim-comments.
 
-ProposalModeration will be available as a Component for a Participatory
-Space.
+## Come usare
+
+Nel backoffice, l'admin può scegliere nelle configurazioni del componente proposte di un processo partecipativo (Processi, Assemblee o Conferenze) se aggiungere l'abilità di rinviare preventivamente la pubblicazione mediante:
+1. Flag "Moderazione Abilitata" per abilitare la moderazione di una proposta.
+2. Flag "Moderazione emendamenti abilitata" per abilitare la moderazione degli emendamenti qualora ne sia stata abilitata la creazione.
+
+Nel backoffice, l'admin può scegliere nelle configurazioni di un componente commentabile (Accountability, Blog, Budget, Debate, Meeting, Proposal, Sortation) di un processo partecipativo (Processi, Assemblee o Conferenze) se aggiungere l'abilità di rinviare preventivamente la pubblicazione mediante:
+1. Flag "Moderazione commenti abilitata" per abilitare la moderazione di tutti commenti al controllo di un admin.
 
 ## Installazione
 
@@ -23,8 +29,6 @@ bundle install
 bundle exec rails decidim_proposal_moderation_engine:install:migrations
 bundle exec rails db:migrate
 ```
-
-Di default tutte le configurazioni hanno valore `false` e quindi il comportamento di decidim non cambia.
 
 ## Contributori
 Gem sviluppata da [Kapusons](https://www.kapusons.it) per [Formez PA](https://www.formez.it). Per contatti scrivere a maintainer-partecipa@formez.it.

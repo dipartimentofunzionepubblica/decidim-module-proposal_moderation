@@ -3,8 +3,8 @@
 # This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 # You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>
 
-# Aggiunge badge SPID o CIE agli utenti nel backoffice che hanno utilizzato
-# queste autorizzazioni
+# Aggiunge badge all'utente che ha dei contenuto che sono stati rigettati in revisione
+#
 Deface::Override.new(virtual_path: "decidim/admin/officializations/index",
                      name: "add-badge-moderation_icon",
                      insert_before: 'div.card-section tbody tr td erb[loud]:contains("translated_attribute(user.officialized_as)")') do

@@ -1,24 +1,21 @@
+# Copyright (C) 2022 Formez PA
+# This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3.
+# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+# You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>
+
+# Comando che gestisce la pubblicazione di un commento
+
 # frozen_string_literal: true
 
 module Decidim
   module Comments
-    # A command with all the business logic to create a new comment
     class PublishComment < Rectify::Command
-      # Public: Initializes the command.
-      #
-      # form - A form object with the params.
       def initialize(comment, user, form)
         @form = form
         @user = user
         @comment = comment
       end
 
-      # Executes the command. Broadcasts these events:
-      #
-      # - :ok when everything is valid.
-      # - :invalid if the form wasn't valid and we couldn't proceed.
-      #
-      # Returns nothing.
       def call
         return broadcast(:invalid) if form.invalid?
 

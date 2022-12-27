@@ -1,8 +1,16 @@
+# Copyright (C) 2022 Formez PA
+# This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3.
+# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+# You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>
+
+# Override necessario per poter gestire il flusso personalizzato dei nuovi stati in caso di moderazione abilitata.
+
+# frozen_string_literal: true
+
 require_dependency Decidim::Proposals::Engine.root.join('app', 'controllers', 'decidim', 'proposals', 'proposals_controller').to_s
 
 module Decidim
   module Proposals
-    # Exposes the proposal resource so users can view and create them.
     class ProposalsController
 
       def index
@@ -130,11 +138,6 @@ module Decidim
           Proposal.only_visible_emendations_for(current_user, current_component).in_moderation_rejected.include?(@proposal)
       end
 
-      private
-
-      def search_klass
-        ::Decidim::ProposalModeration::ProposalModerationSearch
-      end
 
     end
   end

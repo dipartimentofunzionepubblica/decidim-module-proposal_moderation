@@ -1,32 +1,26 @@
+# Copyright (C) 2022 Formez PA
+# This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3.
+# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+# You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>
+
+# Comando che gestisce l'invio in revisione in caso di modulo abilitato
+
 # frozen_string_literal: true
 
 module Decidim
   module Proposals
-    # A command with all the business logic when a user publishes a draft proposal.
     class ReviewProposal < Rectify::Command
-      # Public: Initializes the command.
-      #
-      # proposal     - The proposal to publish.
-      # current_user - The current user.
       def initialize(proposal, current_user)
         @proposal = proposal
         @current_user = current_user
       end
 
-      # Executes the command. Broadcasts these events:
-      #
-      # - :ok when everything is valid and the proposal is published.
-      # - :invalid if the proposal's author is not the current user.
-      #
-      # Returns nothing.
       def call
         return broadcast(:invalid) unless @proposal.authored_by?(@current_user)
 
         transaction do
           review_proposal
-          # increment_scores
           send_notification
-          # send_notification_to_participatory_space
         end
 
         broadcast(:ok, @proposal)
@@ -34,11 +28,6 @@ module Decidim
 
       private
 
-      # This will be the PaperTrail version that is
-      # shown in the version control feature (1 of 1)
-      #
-      # For an attribute to appear in the new version it has to be reset
-      # and reassigned, as PaperTrail only keeps track of object CHANGES.
       def review_proposal
         title = reset(:title)
         body = reset(:body)
@@ -53,7 +42,6 @@ module Decidim
         end
       end
 
-      # Reset the attribute to an empty string and return the old value
       def reset(attribute)
         attribute_value = @proposal[attribute]
         PaperTrail.request(enabled: false) do
