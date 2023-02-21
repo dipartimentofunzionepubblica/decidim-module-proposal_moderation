@@ -51,6 +51,12 @@ module Decidim
         end
       end
 
+      initializer "decidim_proposal_moderation.overrides", after: "decidim.action_controller" do
+        config.to_prepare do
+          Decidim::AmendmentsHelper.include(Decidim::ProposalModeration::AmendmentsHelperOverride)
+        end
+      end
+
       initializer "decidim_proposal_moderation.add_settings" do
         # salvataggio del current_user per poter riutilizzare i comandi definiti per la pubblicazione
         # delle proposte che validano che il current_user come admin
