@@ -28,6 +28,7 @@ module Decidim
           # Relation passed to #or must be structurally compatible. Incompatible values: [:join]
           where({published_at: nil, state: "review"}.merge(user.admin? ? {} : { id: ::Decidim::Proposals::Proposal.user_collection(user).ids }))
         end
+        scope :not_in_review_accepted, -> { where.not(state: "review_accepted") }
         scope :in_review_accepted, -> { where(state: "review_accepted") }
         scope :in_acceptance_for_user, -> (user) do
           # Relation passed to #or must be structurally compatible. Incompatible values: [:join]

@@ -24,10 +24,21 @@ module Decidim
                          .order(position: :asc)
           render "decidim/proposals/proposals/participatory_texts/participatory_text"
         else
-          @base_query = search.results.published.not_hidden.or(search.results.in_review_for_user(current_user).not_hidden)
-          @base_query = @base_query.where.not(id: Proposal.not_in_moderation_rejected_for_user(current_user).ids)
-          if current_component.try(:current_settings).try(:moderation_amendment_enabled)
-            @base_query = @base_query.where.not(id: (Proposal.in_review_accepted - Proposal.in_acceptance_for_user(current_user)).map(&:id))
+          if current_user
+            @base_query = search.results.published.not_hidden.or(search.results.in_review_for_user(current_user).not_hidden)
+            @base_query = @base_query.where.not(id: Proposal.not_in_moderation_rejected_for_user(current_user).ids)
+            if current_component.try(:current_settings).try(:moderation_amendment_enabled)
+              @base_query = @base_query.where.not(id: (Proposal.in_review_accepted - Proposal.in_acceptance_for_user(current_user)).map(&:id))
+            end
+          else
+            @base_query = search
+                            .results
+                            .not_in_review
+                            .not_in_moderation_rejected
+                            .not_in_review_accepted
+                            .or(search.results.where(state: nil))
+                            .published
+                            .not_hidden
           end
 
           @proposals = @base_query.includes(:component, :coauthorships)

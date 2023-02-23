@@ -14,7 +14,7 @@ module Decidim
       def proposals
         @proposals ||= Decidim::Proposals::Proposal.published.not_hidden.except_withdrawn
                                                    .where(component: model)
-                                                   .where.not(id: Proposal.not_in_moderation_rejected_for_user(current_user).ids)
+                                                   .not_in_moderation_rejected
                                                    .not_in_review
                                                    .order_randomly(rand * 2 - 1)
       end
