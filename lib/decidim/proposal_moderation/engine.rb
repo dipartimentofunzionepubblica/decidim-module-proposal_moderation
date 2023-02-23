@@ -54,6 +54,7 @@ module Decidim
       initializer "decidim_proposal_moderation.overrides", after: "decidim.action_controller" do
         config.to_prepare do
           Decidim::AmendmentsHelper.include(Decidim::ProposalModeration::AmendmentsHelperOverride)
+          Decidim::Proposals::ProposalWizardHelper.include(Decidim::ProposalModeration::ProposalWizardHelperOverride)
         end
       end
 
