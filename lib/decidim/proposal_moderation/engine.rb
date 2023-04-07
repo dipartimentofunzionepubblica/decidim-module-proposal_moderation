@@ -105,7 +105,7 @@ module Decidim
               end
             end
 
-            if !instance.current_settings.moderation_enabled
+            if instance.current_settings.respond_to?(:moderation_enabled) && !instance.current_settings.moderation_enabled
               Decidim::Proposals::Proposal.in_review.where(component: instance).each do |proposal|
                 Decidim::Proposals::Admin::PublishProposal.call(proposal, Thread.current[:current_user]) do
                   # Wordkaroud to load current_user (Thread.current[:current_user]) with empty block
@@ -113,7 +113,7 @@ module Decidim
               end
             end
 
-            if !instance.current_settings.moderation_amendment_enabled
+            if instance.current_settings.respond_to?(:moderation_amendment_enabled) && !instance.current_settings.moderation_amendment_enabled
               Decidim::Proposals::Proposal.in_review_accepted.where(component: instance).each do |proposal|
                 Decidim::Amendable::Admin::Accept.call(proposal) do
                   # Wordkaroud to load current_user (Thread.current[:current_user]) with empty block
