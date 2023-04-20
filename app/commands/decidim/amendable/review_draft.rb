@@ -73,11 +73,11 @@ module Decidim
       end
 
       def send_notification
-        affected_users = @current_user.organization.admins
+        affected_users = emendation.participatory_space.moderators
 
         Decidim::EventsManager.publish(
           event: "decidim.events.amendments.amendment_review",
-          event_class: Decidim::Proposals::Admin::PublishAmendmentEvent,
+          event_class: Decidim::Proposals::Admin::ReviewAmendmentEvent,
           resource: emendation,
           followers: affected_users
         )

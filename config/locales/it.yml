@@ -32,7 +32,17 @@ it:
           email_outro: Hai ricevuto questa notifica perchè tu o un altro admin dovete revisionare "%{resource_title}".
           email_subject: C'è un nuovo emendamento creato da %{author_name} che deve essere revisionato %{resource_title}
           notification_title: C'è un nuovo emendamento creato da <a href="%{author_path}">%{author_name} %{author_nickname}</a> che deve essere revisionato <a href="%{resource_path}">%{resource_title}</a>
+        amendment_published_authors:
+          email_intro: "%{resource_title} è stato pubblicato. Puoi leggere la tua proposta in questa pagina:"
+          email_outro: Hai ricevuto questa notifica perché il tuo emendamento è stato pubblicato "%{resource_title}".
+          email_subject: Il tuo emendamento è stato pubblicato in %{resource_title} è stato pubblicato
+          notification_title: Il tuo emendamento <a href="%{resource_path}">%{resource_title}</a> è stato pubblicato
       proposals:
+        proposal_published_authors:
+          email_intro: "%{resource_title} è stata pubblicata. Puoi leggere la tua proposta in questa pagina:"
+          email_outro: Hai ricevuto questa notifica perché la tua proposta è stata pubblicata "%{resource_title}".
+          email_subject: La tua proposta è stata pubblicata in %{resource_title} è stata pubblicata
+          notification_title: La tua proposta <a href="%{resource_path}">%{resource_title}</a> è stata pubblicata
         proposal_review:
           email_intro: "%{resource_title} è stata creata. Devi verificare il contenuto in questa pagina:"
           email_outro: Hai ricevuto questa notifica perchè tu o un altro admin dovete revisionare "%{resource_title}".

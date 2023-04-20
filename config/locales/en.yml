@@ -32,7 +32,17 @@ en:
           email_outro: You have received this notification because you or other admins have to review "%{resource_title}".
           email_subject: There is a new amendment created by %{author_name} to be reviewed %{resource_title}
           notification_title: There is a new amendment created by <a href="%{author_path}">%{author_name} %{author_nickname}</a> to be reviewed <a href="%{resource_path}">%{resource_title}</a>
+        amendment_published_authors:
+          email_intro: "%{resource_title} has been published. You can read the amendment in this page:"
+          email_outro: You have received this notification because your amendment has been successfully published "%{resource_title}".
+          email_subject: Your amendment in %{resource_title} has been successfully published
+          notification_title: Your amendment <a href="%{resource_path}">%{resource_title}</a> has been successfully published
       proposals:
+        proposal_published_authors:
+          email_intro: "%{resource_title} has been published. You can read the proposal in this page:"
+          email_outro: You have received this notification because your proposal has been successfully published "%{resource_title}".
+          email_subject: Your proposal in %{resource_title} has been successfully published
+          notification_title: Your proposal <a href="%{resource_path}">%{resource_title}</a> has been successfully published
         proposal_review:
           email_intro: "%{resource_title} has been created. You have to review in this page:"
           email_outro: You have received this notification because you or other admins have to review "%{resource_title}".

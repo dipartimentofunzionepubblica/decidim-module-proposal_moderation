@@ -51,14 +51,7 @@ module Decidim
       end
 
       def send_notification
-        affected_users = @current_user.organization.admins
-
-        Decidim::EventsManager.publish(
-          event: "decidim.events.proposals.proposal_review",
-          event_class: Decidim::Proposals::Admin::PublishProposalEvent,
-          resource: @proposal,
-          followers: affected_users
-        )
+        NewReviewNotificationAdminCreator.new(@proposal).create
       end
     end
   end

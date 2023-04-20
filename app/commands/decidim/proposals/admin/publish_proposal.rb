@@ -20,6 +20,7 @@ module Decidim
             increment_scores
             send_notification
             send_notification_to_participatory_space
+            send_notification_to_authors
           end
 
           broadcast(:ok, @proposal)
@@ -37,6 +38,18 @@ module Decidim
           ) do
             @proposal.update title: title, body: body, published_at: Time.current, state: nil
           end
+        end
+
+        def send_notification_to_authors
+          Decidim::EventsManager.publish(
+            event: "decidim.events.proposals.proposal_published_authors",
+            event_class: Decidim::Proposals::Admin::PublishProposalEvent,
+            resource: @proposal,
+            affected_users: @proposal.authors,
+            extra: {
+              author_id: @current_user.id
+            }
+          )
         end
 
       end

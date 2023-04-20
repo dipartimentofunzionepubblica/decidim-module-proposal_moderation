@@ -3,7 +3,7 @@
 # This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 # You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>
 
-# Creazione evento per poter personalizzare la notifica di pubblicazione emendamento
+# Creazione evento per poter personalizzare la notifica di pubblicazione proposta
 
 module Decidim
   module Proposals
@@ -47,10 +47,6 @@ module Decidim
 
         def author_nickname
           author.nickname
-        end
-
-        def resource_path
-          manage_component_path(component)
         end
 
       end

@@ -3,14 +3,12 @@
 # This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 # You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>
 
-# Creazione evento per poter personalizzare la notifica
-
-# frozen-string_literal: true
+# Creazione evento per poter personalizzare la notifica di review emendamento
 
 module Decidim
   module Proposals
     module Admin
-      class PublishAmendmentEvent < Decidim::Events::SimpleEvent
+      class ReviewAmendmentEvent < Decidim::Events::SimpleEvent
 
         delegate :url_helpers, to: "Decidim::Core::Engine.routes"
 
@@ -27,16 +25,17 @@ module Decidim
             author_name: author_name,
             author_path: author_path,
             author_nickname: author_nickname,
-            resource_path: resource_path,
+            resource_path: manage_component_url(component),
+            resource_url: manage_component_url(component),
             resource_title: resource_title,
             participatory_space_title: participatory_space_title,
-            participatory_space_url: participatory_space_url,
+            participatory_space_url: manage_component_url(component),
             scope: i18n_scope
           }
         end
 
         def author
-          @author ||= resource.authors.first
+          @author ||= resource.creator.identity
         end
 
         def author_name
@@ -51,9 +50,21 @@ module Decidim
           author.nickname
         end
 
-        # def resource_path
-        #   manage_component_path(component)
-        # end
+        # Override to backoffice
+        def manage_component_url(component)
+          current_params = try(:params) || {}
+          EngineRouter.admin_proxy(component).root_url(locale: current_params[:locale], "q[state_eq]": 'review')
+        end
+
+        # Override to backoffice
+        def resource_path
+          manage_component_url(component)
+        end
+
+        # Override to backoffice
+        def resource_url
+          manage_component_url(component)
+        end
 
       end
     end

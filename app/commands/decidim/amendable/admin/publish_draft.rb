@@ -21,9 +21,22 @@ module Decidim
             change_amendment_state_to_evaluating
             notify_emendation_state_change!
             notify_amendable_authors_and_followers
+            notify_amendment_authors
           end
 
           broadcast(:ok, emendation)
+        end
+
+        def notify_amendment_authors
+          Decidim::EventsManager.publish(
+            event: "decidim.events.amendments.amendment_published_authors",
+            event_class: Decidim::Proposals::Admin::PublishAmendmentEvent,
+            resource: emendation,
+            affected_users: emendation.authors,
+            extra: {
+              author_id: current_user.id
+            }
+          )
         end
 
       end
