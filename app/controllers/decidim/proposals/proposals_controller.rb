@@ -73,15 +73,15 @@ module Decidim
 
       def preview
         enforce_permission_to :edit, :proposal, proposal: @proposal
-        @step = current_component.current_settings.try(:moderation_enabled) ? :step_5 : :step_4
+        @step = is_review_mode? ? :step_5 : :step_4
         @form = form(ProposalForm).from_model(@proposal)
         render @step == :step_5 ? :review : :preview
       end
 
       def publish
         enforce_permission_to :edit, :proposal, proposal: @proposal
-        @step = current_component.current_settings.try(:moderation_enabled) ? :step_5 : :step_4
-        if current_component.current_settings.try(:moderation_enabled)
+        @step = is_review_mode? ? :step_5 : :step_4
+        if is_review_mode?
           ReviewProposal.call(@proposal, current_user) do
             on(:ok) do
               flash[:notice] = I18n.t("proposals.review.success", scope: "decidim")
@@ -148,6 +148,13 @@ module Decidim
           Proposal.only_visible_emendations_for(current_user, current_component).in_review.include?(@proposal) ||
           Proposal.only_visible_emendations_for(current_user, current_component).in_moderation_rejected.include?(@proposal)
       end
+
+      protected
+
+      def is_review_mode?
+        current_component.current_settings.try(:moderation_enabled) && current_user && !current_user&.admin?
+      end
+      helper_method :is_review_mode?
 
 
     end

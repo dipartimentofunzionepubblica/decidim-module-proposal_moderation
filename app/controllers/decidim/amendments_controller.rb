@@ -19,7 +19,7 @@ module Decidim
 
       amendment_draft = amendable.amendments.find_by(amender: current_user.id, state: "draft")
 
-      if amendable.component.try(:current_settings).try(:moderation_enabled) && amendable.review?
+      if is_review_mode? && amendable.review?
         redirect_back fallback_location: :index, flash: { alert: I18n.t("proposals.create.cant_amend", scope: "decidim") } and return
       end
 
@@ -32,14 +32,14 @@ module Decidim
 
     def preview_draft
       enforce_permission_to :create, :amendment, current_component: amendable.component
-      render amendable.component.try(:current_settings).try(:moderation_amendment_enabled) ? :review_draft : :preview_draft
+      render is_review_mode? ? :review_draft : :preview_draft
     end
 
     def publish_draft
       enforce_permission_to :create, :amendment, current_component: amendable.component
       @form = form(Decidim::Amendable::PublishForm).from_model(amendment)
 
-      if amendable.component.try(:current_settings).try(:moderation_amendment_enabled)
+      if is_review_mode?
         Decidim::Amendable::ReviewDraft.call(@form) do
           on(:ok) do
             flash[:notice] = I18n.t("success", scope: "decidim.amendments.review_draft")
@@ -70,10 +70,7 @@ module Decidim
       enforce_permission_to :accept, :amendment, current_component: amendable.component
 
       @form = form(Decidim::Amendable::ReviewForm).from_params(params)
-      if amendable.component.try(:current_settings).try(:moderation_amendment_enabled) &&
-        amendable.component.current_settings.amendments_visibility == "all" && !current_user&.admin?
-        # Non ha senso mandare in revisione l'accettazione quando gli unici a poter accettare sono gli admin
-        # se la visibilità degli emendamenti è settata ai soli autori (non della proposta)
+      if is_review_mode?
         Decidim::Amendable::ReviewAccepted.call(@form) do
           on(:ok) do |emendation|
             flash[:notice] = t("review_accepted.success", scope: "decidim.amendments")
@@ -99,6 +96,14 @@ module Decidim
         end
       end
     end
+
+    def is_review_mode?
+      amendable.component.try(:current_settings).try(:moderation_amendment_enabled) &&
+        amendable.component.current_settings.amendments_visibility == "all" && !current_user&.admin?
+      # Non ha senso mandare in revisione l'accettazione quando gli unici a poter accettare sono gli admin
+      # se la visibilità degli emendamenti è settata ai soli autori (non della proposta)
+    end
+    helper_method :is_review_mode?
 
     # def permission_class_chain
     #   [Decidim::ProposalModeration::Permissions] + super

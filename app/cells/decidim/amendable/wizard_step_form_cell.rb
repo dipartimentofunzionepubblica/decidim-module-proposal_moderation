@@ -11,6 +11,8 @@ module Decidim
   module Amendable
     class WizardStepFormCell
 
+      delegate :is_review_mode?, to: :controller
+
       def current_step
         @current_step ||= case params[:action].to_sym
                           when :new, :create
@@ -25,7 +27,7 @@ module Decidim
       end
 
       def moderation_enabled?
-        self.model.component.current_settings.try(:moderation_amendment_enabled)
+        is_review_mode?
       end
 
       def common_options

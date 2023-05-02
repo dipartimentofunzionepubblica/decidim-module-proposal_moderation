@@ -22,7 +22,7 @@ module Decidim
             #{proposal_wizard_stepper_step(:step_1, current_step)}
             #{proposal_wizard_stepper_step(:step_2, current_step)}
             #{proposal_wizard_stepper_step(:step_3, current_step)}
-            #{proposal_wizard_stepper_step(current_component.current_settings.try(:moderation_enabled) ? :step_5 : :step_4, current_step)}
+            #{proposal_wizard_stepper_step(is_review_mode? ? :step_5 : :step_4, current_step)}
             ).html_safe
           end
         end
